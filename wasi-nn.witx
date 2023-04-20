@@ -3,6 +3,7 @@
 
 (typename $buffer_size u32)
 (typename $status u32)
+(typename $half_uuid u64)
 
 (typename $nn_errno
   (enum (@witx tag u16)
@@ -125,5 +126,29 @@
     (param $context $graph_execution_context)
     (result $error (expected (error $nn_errno)))
   )
+
+  (@interface func (export "ask_question")
+    (param $context string)
+    (param $question string)
+    (param $response (@witx pointer u8))
+    (param $max_response_size $buffer_size)
+    (result $error (expected (error $nn_errno)))
+  )
+
+  (@interface func (export "create_chat")
+      (param $message string)
+      (param $response (@witx pointer u8))
+      (param $max_response_size $buffer_size)
+      (result $error (expected (tuple $half_uuid $half_uuid) (error $nn_errno)))
+  )
+
+  (@interface func (export "continue_chat")
+      (param $chat_id string)
+      (param $message string)
+      (param $response (@witx pointer u8))
+      (param $max_response_size $buffer_size)
+      (result $error (expected (error $nn_errno)))
+  )
+
 )
 
