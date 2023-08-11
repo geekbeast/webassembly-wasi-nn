@@ -150,5 +150,11 @@
       (result $error (expected (error $nn_errno)))
   )
 
+  (@interface func (export "create_image")
+      (param $prompt string)
+      (param $response (@witx pointer u8))
+      (param $max_response_size $buffer_size)
+      (result $error (expected (error $nn_errno)))
+  )
 )
 
